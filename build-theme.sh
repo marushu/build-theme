@@ -25,6 +25,7 @@ grep "\"serve"\" ./package.json | sed -i '' -e "s/vccw.dev/${VCCW_HOST_NAME}/g" 
 rm -rf package/
 
 open http://"${VCCW_HOST_NAME}"/wp-admin
+open http://"${VCCW_HOST_NAME}"
 
 cat ../../../../build-theme/mixin.txt | awk '{print $0}' >> ./sass/style.scss
 
