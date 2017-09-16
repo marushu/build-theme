@@ -6,6 +6,10 @@ read THEME_NAME
 echo -n "What is your theme slug? : "
 read THEME_SLUG
 
+if [ ! -d ../dist ]; then
+  mkdir ../dist
+fi
+
 VCCW_HOST_NAME=$(grep "hostname:" ../site.yml | sed -e s/hostname://g | tr -d '\"\ ' | sed -n 1p)
 
 cd ../wordpress  && wp scaffold _s "${THEME_SLUG}" --activate --theme_name="${THEME_NAME}" --sassify
@@ -18,7 +22,9 @@ cp package/package.json .
 
 grep "\"serve"\" ./package.json | sed -i '' -e "s/vccw.dev/${VCCW_HOST_NAME}/g" ./package.json
 
-rm -rf package
+rm -rf package/
+
+open http://"${VCCW_HOST_NAME}"/wp-admin
 
 cat ../../../../build-theme/mixin.txt | awk '{print $0}' >> ./sass/style.scss
 
