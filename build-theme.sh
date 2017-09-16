@@ -8,8 +8,6 @@ read THEME_SLUG
 
 VCCW_HOST_NAME=$(grep "hostname:" ../site.yml | sed -e s/hostname://g | tr -d '\"\ ' | sed -n 1p)
 
-BASE_MIXIN=$(cat ./mixin.txt)
-
 cd ../wordpress  && wp scaffold _s "${THEME_SLUG}" --activate --theme_name="${THEME_NAME}" --sassify
 
 cd wp-content/themes/${THEME_SLUG}
@@ -22,7 +20,7 @@ grep "\"serve"\" ./package.json | sed -i '' -e "s/vccw.dev/${VCCW_HOST_NAME}/g" 
 
 rm -rf package
 
-${BASE_MIXIN} >> ./sass/style.scss
+cat ../../../../build-theme/mixin.txt | awk '{print $0}' >> ./sass/style.scss
 
 npm install
 
