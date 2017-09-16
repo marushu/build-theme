@@ -9,7 +9,7 @@ Enter your theme name. ex. My awesome theme :P.
 Enter your theme slug. ex. my-awesome-theme
 
 ## Set task runner
-Then this command get package.json from <git@github.com:marushu/package.git> repo.
+Then this command get package.json from <https://github.com/marushu/package> repo.
 And set browser-sync's proxy from your hostname at site.yml. (Default vccw.dev)
 
 ### And run these commands.
