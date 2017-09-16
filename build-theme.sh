@@ -1,11 +1,22 @@
 #!/usr/bin/env bash
 
-echo -n "What is your theme name? : "
-read THEME_NAME
+# Check argument 1(theme name)
+if [ ! ${1} ]; then
+  echo -n "What is your theme name? : "
+  read THEME_NAME
+else
+  THEME_NAME=${1}
+fi
 
-echo -n "What is your theme slug? : "
-read THEME_SLUG
+# Check argument 1(theme slug)
+if [ ! ${2} ]; then
+  echo -n "What is your theme slug? : "
+  read THEME_SLUG
+else
+  THEME_SLUG=${2}
+fi
 
+# Check directory for imagemin
 if [ ! -d ../dist ]; then
   mkdir ../dist
 fi
