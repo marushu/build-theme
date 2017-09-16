@@ -16,7 +16,7 @@ git clone git@github.com:marushu/package.git
 
 cp package/package.json .
 
-grep "\"serve"\" ./package.json | sed -i -e "s/vccw.dev/${VCCW_HOST_NAME}/g" ./package.json
+grep "\"serve"\" ./package.json | sed -i '' -e "s/vccw.dev/${VCCW_HOST_NAME}/g" ./package.json
 
 rm -rf package
 
