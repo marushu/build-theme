@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Check argument 1(theme name)
-if [ ! ${1} ]; then
+if [ -z "${1}" ]; then
   echo -n "What is your theme name? : "
   read THEME_NAME
 else
@@ -9,19 +8,22 @@ else
 fi
 
 # Check argument 1(theme slug)
-if [ ! ${2} ]; then
+if [ -z "${2}" ]; then
   echo -n "What is your theme slug? : "
   read THEME_SLUG
 else
   THEME_SLUG=${2}
 fi
 
-# Check directory for imagemin
 if [ ! -d ../dist ]; then
   mkdir ../dist
 fi
 
 VCCW_HOST_NAME=$(grep "hostname:" ../site.yml | sed -e s/hostname://g | tr -d '\"\ ' | sed -n 1p)
+
+VCCW_SITE_URL=$(grep "wp_siteurl:" ../site.yml | sed -e "s/wp_siteurl://" | sed -e "s/\# Path to the WP_SITEURL like \"wp\"//g" | tr -d "\'\ ")
+
+[ -z "${VCCW_SITE_URL}" ] && VCCW_SITE_URL='' || VCCW_SITE_URL="/${VCCW_SITE_URL}"
 
 cd ../wordpress  && wp scaffold _s "${THEME_SLUG}" --activate --theme_name="${THEME_NAME}" --sassify
 
@@ -35,7 +37,7 @@ grep "\"serve"\" ./package.json | sed -i '' -e "s/vccw.dev/${VCCW_HOST_NAME}/g" 
 
 rm -rf package/
 
-open http://"${VCCW_HOST_NAME}"/wp-admin
+open http://"${VCCW_HOST_NAME}""${VCCW_SITE_URL}"/wp-admin
 open http://"${VCCW_HOST_NAME}"
 
 cat ../../../../build-theme/mixin.txt | awk '{print $0}' >> ./sass/style.scss
